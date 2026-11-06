@@ -1,0 +1,24 @@
+services:
+  tunnel:
+    image: oibio/frp-tunnel-helper:0.3.0
+    command: ["--name", "my-app", "--host", "app", "--port", "8080"]
+    environment:
+      TUNNEL_DOMAIN: ${TUNNEL_DOMAIN:?Set your relay hostname}
+      TUNNEL_AUTH_TOKEN_FILE: /run/secrets/tunnel_token
+    secrets:
+      - tunnel_token
+    volumes:
+      - tunnel-state:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop: [ALL]
+    restart: unless-stopped
+    stop_grace_period: 15s
+
+volumes:
+  tunnel-state:
+
+secrets:
+  tunnel_token:
+    file: ${TUNNEL_TOKEN_FILE:?Set the path to a file containing only the token}

@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!src/
+!src/tunnel_helper.py
+!LICENSE
+!THIRD_PARTY_NOTICES.md
+!licenses/
+!licenses/**
